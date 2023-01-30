@@ -3,6 +3,7 @@ package com.codingnomads.nytimesapi.services;
 
 
 import com.codingnomads.nytimesapi.models.Article;
+import com.codingnomads.nytimesapi.models.Media;
 import com.codingnomads.nytimesapi.models.NytResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -35,8 +37,12 @@ public class ArticleService {
     }
 
     public List<Article> checkForMedia(List<Article> articles) {
-        articles.removeIf(a -> a.getMedia().isEmpty());
-        return articles;
+        List<Article> articlesWithMedia = new ArrayList<>();
+       articlesWithMedia = articles.stream().filter(article -> article.getMedia().isEmpty()).collect(Collectors.toList());
+//        articles.removeIf(a -> a.getMedia().isEmpty());
+
+
+        return articlesWithMedia;
 
     }
 }
