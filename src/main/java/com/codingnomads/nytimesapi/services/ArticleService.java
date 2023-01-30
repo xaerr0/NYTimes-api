@@ -33,4 +33,10 @@ public class ArticleService {
             return results;
         }
     }
+
+    public List<Article> checkForMedia(List<Article> articles) {
+        articles.removeIf(a -> a.getMedia().isEmpty());
+        return articles;
+
+    }
 }
