@@ -1,11 +1,15 @@
 package com.codingnomads.nytimesapi.controllers;
 
 import com.codingnomads.nytimesapi.models.Article;
+import com.codingnomads.nytimesapi.models.Doc;
 import com.codingnomads.nytimesapi.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,5 +24,18 @@ public class ArticleController {
         List<Article> articles = articleService.getMostPopular();
         model.addAttribute("articleList", articleService.checkForMedia(articles));
         return "index";
+    }
+
+    @GetMapping("search/")
+    public String displaySearchPage(Model model) {
+        return "search";
+    }
+
+    @PostMapping("/search/{searchText}")
+    public String searchResults(Model model, @PathVariable(name = "searchText") String searchText) {
+        List<Doc> articles = articleService.getSearchResults(searchText);
+        model.addAttribute(articleService.getSearchResults(searchText));
+
+        return "search-results";
     }
 }
