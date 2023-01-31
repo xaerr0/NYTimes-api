@@ -25,4 +25,5 @@ public class Doc {
     @JsonProperty("word_count")
     private Double wordCount;
 
+    private String imageUrl;
 }

@@ -26,16 +26,15 @@ public class ArticleController {
         return "index";
     }
 
-    @GetMapping("search/")
+    @GetMapping("/search")
     public String displaySearchPage(Model model) {
         return "search";
     }
 
-    @PostMapping("/search/{searchText}")
-    public String searchResults(Model model, @PathVariable(name = "searchText") String searchText) {
-        List<Doc> articles = articleService.getSearchResults(searchText);
+    @PostMapping("/search")
+    public String searchResults(Model model, @RequestParam String searchText) {
+//        List<Doc> articles = articleService.getSearchResults(searchText);
         model.addAttribute(articleService.getSearchResults(searchText));
-
         return "search-results";
     }
 }

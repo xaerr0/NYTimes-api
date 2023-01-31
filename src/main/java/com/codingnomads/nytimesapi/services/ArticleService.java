@@ -11,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,19 +50,33 @@ public class ArticleService {
         for (Article article : articles) {
             List<Media> media = article.getMedia();
             Media thumbnail = media.get(0);
-            Thumbnail urlImage = thumbnail.getMediaMetadata().get(0);
+            Thumbnail urlImage = thumbnail.getMediaMetadata().get(2);
             article.setImageUrl(urlImage.getUrl());
         }
     }
 
 
+//    public List<Doc> getSearchResults(String searchText) {
+//        ResponseEntity<NytSearchResponse> response = restTemplate.getForEntity(searchUrl + searchText + "&api-key=" +
+//                                                                                     apikey, NytSearchResponse.class);
+//        List<Doc> docs = new ArrayList<>();
+//        if (response.getBody() != null && response.getStatusCode().equals(HttpStatus.OK)){
+//            return docs;
+//        } else {
+//            System.out.println("Error!!");
+//        }
+//        return docs;
+//    }
+
     public List<Doc> getSearchResults(String searchText) {
+        ResponseEntity<NytSearchResponse> response = restTemplate
+                .getForEntity(searchUrl + searchText + "?api-key=" + apikey, NytSearchResponse.class);
+        List<Doc> results = new ArrayList<>();
+        if (response != null && response.getStatusCode().equals("OK")) {
 
-            ResponseEntity<NytSearchResponse> responseEntity = restTemplate.getForEntity(searchUrl + searchText + "&api-key=" +
-                                                                                         apikey, NytSearchResponse.class);
-            List<Doc> results = Objects.requireNonNull(responseEntity.getBody().getResponse().getDocs());
-        return results;
+            return results;
+        }
+        return null;
     }
-
 
 }
