@@ -32,9 +32,8 @@ public class ArticleController {
     }
 
     @PostMapping("/search")
-    public String searchResults(Model model, @RequestParam String searchText) {
-//        List<Doc> articles = articleService.getSearchResults(searchText);
-        model.addAttribute(articleService.getSearchResults(searchText));
+    public String searchResults(Model model, @RequestParam(value = "searchText") String searchText) {
+        model.addAttribute("searchResults", articleService.getSearchResults(searchText));
         return "search-results";
     }
 }

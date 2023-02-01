@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +17,7 @@ public class Doc {
     @JsonProperty("web_url")
     private String webUrl;
 
-    private Multimedia multimedia;
+    private List<Multimedia> multimedia;
     private Headline headline;
     private Byline byline;
 

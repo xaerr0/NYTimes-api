@@ -7,13 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ArticleService {
@@ -55,28 +52,27 @@ public class ArticleService {
         }
     }
 
-
-//    public List<Doc> getSearchResults(String searchText) {
-//        ResponseEntity<NytSearchResponse> response = restTemplate.getForEntity(searchUrl + searchText + "&api-key=" +
-//                                                                                     apikey, NytSearchResponse.class);
-//        List<Doc> docs = new ArrayList<>();
-//        if (response.getBody() != null && response.getStatusCode().equals(HttpStatus.OK)){
-//            return docs;
-//        } else {
-//            System.out.println("Error!!");
-//        }
-//        return docs;
-//    }
-
-    public List<Doc> getSearchResults(String searchText) {
-        ResponseEntity<NytSearchResponse> response = restTemplate
-                .getForEntity(searchUrl + searchText + "?api-key=" + apikey, NytSearchResponse.class);
-        List<Doc> results = new ArrayList<>();
-        if (response != null && response.getStatusCode().equals("OK")) {
-
-            return results;
+    public void getSearchThumbnail(List<Doc> docs) {
+        for (Doc doc : docs) {
+            for (Multimedia multimedia : doc.getMultimedia()) {
+                if (multimedia.getSubType().equals("largeHorizontal375")) {
+                    doc.setImageUrl("https://www.nytimes.com/" + multimedia.getUrl());
+                }
+            }
         }
-        return null;
     }
 
+
+    public List<Doc> getSearchResults(String searchText) {
+        ResponseEntity<NytSearchResponse> response = restTemplate.getForEntity(searchUrl + searchText + "&api-key=" +
+                                                                               apikey, NytSearchResponse.class);
+        List<Doc> docs = new ArrayList<>();
+
+        if (response.getBody() != null && response.getStatusCode().equals(HttpStatus.OK)) {
+            docs = response.getBody().getResponse().getDocs();
+            getSearchThumbnail(docs);
+        }
+        return docs;
+
+    }
 }
