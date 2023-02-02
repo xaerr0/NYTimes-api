@@ -36,6 +36,7 @@ public class ArticleService {
         }
     }
 
+    //TODO add searchbar to search-results
     public List<Article> getMostEmailed() {
         NytResponse response = restTemplate.getForObject(mostPopularEmailedUrl + "api-key=" + apikey, NytResponse.class);
         List<Article> results = new ArrayList<>();
