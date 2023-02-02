@@ -28,6 +28,8 @@ public class ArticleController {
 
     @GetMapping("/search")
     public String displaySearchPage(Model model) {
+        List<Article> articles = articleService.getMostEmailed();
+        model.addAttribute("articleList", articleService.checkForMedia(articles));
         return "search";
     }
 

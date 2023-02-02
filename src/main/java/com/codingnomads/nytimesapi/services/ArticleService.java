@@ -23,9 +23,21 @@ public class ArticleService {
     private String mostPopularUrl;
     @Value("${searchUrl}")
     private String searchUrl;
+    @Value("${mostEmailedUrl}")
+    private String mostPopularEmailedUrl;
 
     public List<Article> getMostPopular() {
         NytResponse response = restTemplate.getForObject(mostPopularUrl + "api-key=" + apikey, NytResponse.class);
+        List<Article> results = new ArrayList<>();
+        if (response != null && response.getStatus().equals("OK")) {
+            return response.getResults();
+        } else {
+            return results;
+        }
+    }
+
+    public List<Article> getMostEmailed() {
+        NytResponse response = restTemplate.getForObject(mostPopularEmailedUrl + "api-key=" + apikey, NytResponse.class);
         List<Article> results = new ArrayList<>();
         if (response != null && response.getStatus().equals("OK")) {
             return response.getResults();
