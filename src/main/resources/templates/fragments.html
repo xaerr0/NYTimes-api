@@ -11,7 +11,7 @@
 </head>
 <body>
 <div th:fragment="navigation">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-gradient">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light bg-dark bg-gradient">
         <div class="container-fluid">
             <a th:href="@{/}" class="navbar-brand">NY Times API Demo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -42,7 +42,7 @@
     <form class="d-flex" th:action="@{/search}" method="post" modelattribute="searchResults">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                name="searchText">
-        <button class="btn btn-outline-dark text-dark" type="submit">Search</button>
+        <button class="btn btn-dark" type="submit">Search</button>
 </div>
 
 
