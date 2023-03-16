@@ -26,6 +26,7 @@ public class ArticleService {
     @Value("${mostEmailedUrl}")
     private String mostPopularEmailedUrl;
 
+
     public List<Article> getMostPopular() {
         NytResponse response = restTemplate.getForObject(mostPopularUrl + "api-key=" + apikey, NytResponse.class);
         List<Article> results = new ArrayList<>();
@@ -36,7 +37,6 @@ public class ArticleService {
         }
     }
 
-    //TODO add searchbar to search-results
     public List<Article> getMostEmailed() {
         NytResponse response = restTemplate.getForObject(mostPopularEmailedUrl + "api-key=" + apikey, NytResponse.class);
         List<Article> results = new ArrayList<>();
@@ -55,7 +55,7 @@ public class ArticleService {
         return articles;
     }
 
-    //TODO Combine these 2 methods into 1?
+
     public void setUrlThumbnail(List<Article> articles) {
         for (Article article : articles) {
             List<Media> media = article.getMedia();
@@ -75,7 +75,6 @@ public class ArticleService {
         }
     }
 
-
     public List<Doc> getSearchResults(String searchText) {
         ResponseEntity<NytSearchResponse> response = restTemplate.getForEntity(searchUrl + searchText + "&api-key=" +
                                                                                apikey, NytSearchResponse.class);
@@ -86,6 +85,5 @@ public class ArticleService {
             getSearchThumbnail(docs);
         }
         return docs;
-
     }
 }
