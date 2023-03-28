@@ -55,7 +55,6 @@ public class ArticleService {
         return articles;
     }
 
-
     public void setUrlThumbnail(List<Article> articles) {
         for (Article article : articles) {
             List<Media> media = article.getMedia();
