@@ -12,5 +12,4 @@ public class Multimedia {
     private String url;
     private Double height;
     private Double width;
-
 }
